@@ -388,3 +388,13 @@ violation(enforce_order):-
     attribute((encoding,channel),(M,E1),C1),
     attribute((encoding,channel),(M,E2),C2),
     not C1 < C2.
+
+% @hard(axes_include_title) Axes require a non-null title
+violation(axes_include_title) :-
+    attribute((mark,type),M,(bar;tick;area;line;point)),
+    entity(encoding,M,E),
+    attribute((encoding,channel),E,C),
+    helper((mark,axis),M,A),
+    attribute((axis,channel),A,C),
+    not attribute((axis,title),A,_),
+    C = (x;y).
